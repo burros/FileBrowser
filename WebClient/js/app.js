@@ -1,0 +1,1 @@
+var fileBrowserApp = angular.module('fileBrowserApp', []);

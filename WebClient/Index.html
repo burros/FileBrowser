@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html ng-app="fileBrowserApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>File Browser</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div style="background-color: dodgerblue; border: none; color: white" class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <h2>File Browser</h2>
+            </div>
+        </div>
+    </div>
+<div class="container body-content" ng-controller="folderBrowserCtrl">
+    <div class="row">
+        <table class="table table-striped text-center">
+            <thead>
+            <tr>
+                <th class="text-center">
+                    <h2>Less 10Mb</h2>
+                </th>
+                <th class="text-center">
+                    <h2>10Mb-50Mb</h2>
+                </th>
+                <th class="text-center">
+                    <h2>More 100MB</h2>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <h3>{{currentFolder.CountFileLess10Mb}}</h3>
+                </td>
+                <td>
+                    <h3>{{currentFolder.CountFileBetween10And50Mb}}</h3>
+                </td>
+                <td>
+                    <h3>{{currentFolder.CountFileMore100Md}}</h3>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="padding-left: 40px;" class="row">
+        <label class="radio-inline">Find files in: </label>
+        <label class="radio-inline"><input type="radio" ng-model="isRecursion.text" value="false" ng-click="findFolder(currentFolder.CurrentPath)">Only folder and subfolder</label>
+        <label class="radio-inline"><input type="radio" ng-model="isRecursion.text" value="true" ng-click="findFolder(currentFolder.CurrentPath)">Folder and all subfolder(recursion)</label>
+        <h4><strong>Current path: </strong>{{currentFolder.CurrentPath}}</h4>
+    </div>
+    <div style="padding-left: 40px; padding-right: 40px;">
+        <h3>Folders:</h3>
+        <table class="table table-condensed">
+            <tbody>
+                <tr ng-show="isNotRoot.text">
+                    <td><a ng-click="findFolder(currentFolder.ParentPath)">..</a></td>
+                </tr>
+            <tr ng-repeat="folder in currentFolder.Folders">
+                <td><a ng-click="findFolder(folder.Path)">{{folder.Name}}</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <h3>Files:</h3>
+        <table class="table table-condensed">
+            <tbody>
+            <tr ng-repeat="file in currentFolder.Files">
+                <td>{{file.Name}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="padding-left: 40px;" class="row">
+        <blockquote>
+            <h4 class="text-danger"><strong>Access denied: </strong>{{currentFolder.AccessDenied}}</h4>
+            <footer>The number of inaccessible files and folders</footer>
+        </blockquote>
+    </div>
+</div>
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/service/webService.js"></script>
+    <script src="js/controllers/folderBroswserCtrl.js"></script>
+</body>
+</html>
